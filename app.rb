@@ -103,9 +103,9 @@ end
 
 post '/idea/new' do
   if Idea.create!(params['idea'])
-    flash[:notice] = "Idea saved!"
+    flash[:notice] = "Your Band Name has been added to the list!"
   else
-    flash[:error] = "Idea invalid. Please supply an idea and username!"
+    flash[:error] = "There was something funny about your Band Name, try adding it again."
   end
   redirect '/'
 end
