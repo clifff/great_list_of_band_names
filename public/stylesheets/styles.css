@@ -101,10 +101,14 @@ h1 {
   -webkit-border-radius: 2px;
   box-shadow: 0 0 0 3px #EEE;
   padding: 7px;
+  color: #999;
 }
 
 #main header input[type="text"]:focus {
   background: #FFF;
+  color: #333;
+  border: 1px solid #C5D5D8;
+  box-shadow: 0 0 0 3px #DDF2F8;
 }
 
 #main header input[type="text"]:disabled {}
