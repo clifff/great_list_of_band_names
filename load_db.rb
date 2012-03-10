@@ -1,4 +1,4 @@
-if settings.environment == 'production'
+if settings.environment = :production
   require 'uri'
   db = URI.parse(ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 
