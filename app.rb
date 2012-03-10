@@ -3,7 +3,7 @@ require 'sinatra'
 require 'sinatra/flash'
 require 'active_record'
 require 'uuid'
-require 'load_db'
+require './load_db'
 
 class Idea < ActiveRecord::Base
   validates_presence_of :body
