@@ -1,18 +1,44 @@
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/flash'
-require 'active_record'
 require 'uuid'
+require 'json'
 require './load_db'
 
-class Idea < ActiveRecord::Base
-  validates_presence_of :body
-  validates_presence_of :user_name
+class Idea
+  def self.all
+    ideas = REDIS.lrange(key, 0, -1)
+    ideas = ideas.collect{|i| JSON.parse(i)}
+    ideas
+  end
+
+  def self.create!(idea = {})
+    if valid_params?(idea)
+      REDIS.lpush(key, JSON.dump(idea))
+    else
+      false
+    end
+  end
+
+  private
+
+  def self.key
+    "globn:ideas"
+  end
+
+  def self.valid_params?(idea = {})
+    if idea['body'] && idea['body'].size > 0 && idea['user_name'] && idea['user_name'].size > 0
+      true
+    else
+      false
+    end
+  end
 end
 
-class Vote < ActiveRecord::Base
-  validates_presence_of :uuid
-  validates_presence_of :idea_id
+class Vote
+
+  def already_voted?
+  end
 end
 
 enable :sessions
@@ -32,10 +58,8 @@ get '/' do
 end
 
 post '/idea/new' do
-  idea = Idea.create(params['idea'])
-  if idea.valid?
+  if Idea.create!(params['idea'])
     flash[:notice] = "Idea saved!"
-    idea.save!
   else
     flash[:error] = "Idea invalid. Please supply an idea and username!"
   end

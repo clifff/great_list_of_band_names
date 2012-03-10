@@ -61,9 +61,9 @@
 	
 	    <% @ideas.each do |idea| %>
         <article>
-          <h1><em>1.</em> <%= "#{idea.body}" %></h1>
+          <h1><em>1.</em> <%= "#{idea['body']}" %></h1>
           <footer>
-            by <author><%= "#{idea.user_name}" %></author> <a href="#">Vote this up</a>
+            by <author><%= "#{idea['user_name']}" %></author> <a href="#">Vote this up</a>
           </footer>
         </article>
       <% end %>

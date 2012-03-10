@@ -5,14 +5,8 @@ gem "sinatra"
 gem "heroku"
 gem "redis"
 gem "rake"
-gem "activerecord"
 gem "uuid"
 gem "sinatra-flash"
-
-group :development do
-  gem "sqlite3"
-end
-
-group :production do
-  gem 'pg'
-end
+gem "foreman"
+gem "redis"
+gem "json"
