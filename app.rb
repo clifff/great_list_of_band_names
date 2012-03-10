@@ -17,6 +17,8 @@ end
 
 enable :sessions
 
+set :public_folder, File.dirname(__FILE__) + '/public'
+
 before do
   unless request.cookies["uuid"]
     response.set_cookie("uuid", :value => uuid_generator.generate)
