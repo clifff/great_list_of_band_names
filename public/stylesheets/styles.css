@@ -36,6 +36,7 @@ button, input[type="button"], input[type="reset"], input[type="submit"] { cursor
 input[type="checkbox"], input[type="radio"] { box-sizing: border-box; padding: 0 }
 input[type="search"] { -webkit-appearance: textfield; -moz-box-sizing: content-box; -webkit-box-sizing: content-box; box-sizing: content-box }
 input[type="search"]::-webkit-search-decoration { -webkit-appearance: none }
+input:focus { outline: none }
 button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0 }
 textarea { overflow: auto; vertical-align: top }
 table { border-collapse: collapse; border-spacing: 0 }
@@ -51,7 +52,7 @@ body {
 }
 
 a {
-  color: #F60;
+  color: #D84E1F;
 }
 
 h1 {
@@ -83,28 +84,54 @@ h1 {
   margin-top: 0
 }
 
+#main header label {
+  color: #666;
+  display: none;
+}
+
 #main header input[type="text"] {
-  border: 1px solid #DDD;
-  border-bottom: 1px solid #BBB;
-  border-right: 1px solid #BBB;
+  background: #FAFAFA;
+  border: 1px solid #CCC;
   border-radius: 2px; 
   -moz-border-radius: 2px; 
   -webkit-border-radius: 2px;
-  box-shadow: 2px 2px 0 #000;
+  box-shadow: 0 0 0 3px #EEE;
+  padding: 7px;
 }
 
-#main header input[type="text"]:enabled {}
+#main header input[type="text"]:focus {
+  background: #FFF;
+}
+
 #main header input[type="text"]:disabled {}
   
 #main header input[type="submit"] {
   border: none;
   background: #8ABA56;
   color: #FFF;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, .2);
   font-weight: bold;
   padding: 7px 12px;
   border-radius: 2px; 
   -moz-border-radius: 2px; 
   -webkit-border-radius: 2px;
+  float: left;
+}
+
+#main header input[type="submit"]:hover {
+ background: #89D339; 
+}
+
+#main header input[type="submit"]:active {
+  background: #D84E1F;
+}
+
+#main header #idea-body {
+  width: 640px;
+}
+
+#main header #idea-user-name {
+  float: left;
 }
 
 #main > section {
@@ -115,6 +142,11 @@ h1 {
   padding: 20px;
   margin: 30px 0 0 20px;
   border-radius: 5px;
+}
+
+#main > section header p {
+  width: 250px;
+  float: left;
 }
 
 #main article h1 {
@@ -153,6 +185,32 @@ body > footer {
   margin: 0 0 20px;
 }
 
+
+
+
+
+/* Tools */
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+.clearfix {
+	display: inline-block;
+}
+ 
+html[xmlns] .clearfix {
+	display: block;
+}
+ 
+* html .clearfix {
+	height: 1%;
+}
 
 @media (max-width: 1100px) {}
 @media (max-width: 980px) {}
