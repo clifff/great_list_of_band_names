@@ -17,4 +17,4 @@ end
 
 #ActiveRecord::Base.logger = Logger.new(STDOUT)
 #ActiveRecord::Migration.verbose = true
-#ActiveRecord::Migrator.migrate("db/migrate")
+ActiveRecord::Migrator.migrate("db/migrate")
