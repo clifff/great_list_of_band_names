@@ -100,8 +100,8 @@ h1 {
   background: #8ABA56;
   color: #FFF;
   font-weight: bold;
-  border-radius: 2px; 
   padding: 7px 12px;
+  border-radius: 2px; 
   -moz-border-radius: 2px; 
   -webkit-border-radius: 2px;
 }
@@ -119,11 +119,12 @@ h1 {
 #main article h1 {
   font-size: 1em;
   margin-bottom: 0;
+  position: relative;
 }
 
 #main article h1 em {
   font-style: normal;
-  color: #666;
+  color: #333;
 }
 
 #main article footer {
