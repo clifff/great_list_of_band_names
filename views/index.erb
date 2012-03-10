@@ -1,24 +1,80 @@
-<% if flash[:notice] %>
-  <h1> <%= flash[:notice] %> </h1>
-<% end %>
-<% if flash[:error] %>
-  <h1> <%= flash[:error] %></h1>
-<% end %>
-<form action='/idea/new' method='post'>
-  <p>
-    <label for='idea-body'>Body:</label>
-    <input id='idea-body' type='text' name='idea[body]'/>
-  </p>
-  <p>
-    <label for='idea-user-name'>User name:</label>
-    <input id='idea-user-name' type='text' name='idea[user_name]'/>
-  </p>
-  <input type='submit'/>
-</form>
-<h1>ideas</h1>
-<ul>
-  <% @ideas.each do |idea| %>
-    <li><%= "#{idea.body} - #{idea.user_name}" %></li>
-  <% end %>
-</ul>
-<%= @cookies.inspect %>
+<!doctype html>
+
+<!--[if IE 6]><html lang="en" class="no-js ie6"><![endif]-->
+<!--[if (gt IE 6)|!(IE)]><!--><html lang="en" class="no-js"><!--<![endif]-->
+
+<head>
+	<meta charset="utf-8">
+	<title>The Long List of Band Names</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+	<link rel="stylesheet" href="/stylesheets/styles.css">
+</head>
+
+<body class="home">
+	
+	<div id="main">
+	  
+	  <header>
+  		<h1 id="logo">The Long List of Band Names</h1>
+  		<nav>
+  			<ul>
+  				<li><a href="#">Home</a></li>
+  				<li><a href="#">About</a></li>
+  				<li><a href="#">Services</a></li>
+  				<li><a href="#">Contact</a></li>
+  			</ul>
+  		</nav>
+  	</header>
+	  
+		<section>
+			<header>
+			  <% if flash[:notice] %>
+          <div class="flash notice"><%= flash[:notice] %></div>
+        <% end %>
+        <% if flash[:error] %>
+          <div class="flash error"><%= flash[:error] %></div>
+        <% end %>
+			  <h1>Suggest a Band Name</h1>
+			  
+			  <form action="/idea/new" method="post">
+          <p>
+            <label for="idea-body">What's your band name?</label>
+            <input id="idea-body" type="text" name="idea[body]" />
+          </p>
+          <p>
+            <label for="idea-user-name">What's your name?</label>
+            <input id="idea-user-name" type="text" name="idea[user_name]" />
+          </p>
+          <input type="submit" value="Submit" />
+        </form>
+			</header>
+			
+			<hr />
+			
+			<h1>Leaderboard</h1>
+	
+	    <% @ideas.each do |idea| %>
+        <article>
+          <h1><em>.</em> <%= "#{idea.body}" %></h1>
+          <footer>
+            by <author><%= "#{idea.user_name}" %></author> <a href="#">Vote this up</a>
+          </footer>
+        </article>
+      <% end %>
+		</section>
+
+	</div>
+
+	<footer>
+	  <p><img src="/images/sxsw-logo.png" alt="" /></p>
+	</footer>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+<script>!window.jQuery && document.write(unescape('%3Cscript src="js/jquery-1.6.4.min.js"%3E%3C/script%3E'))</script>
+<script src="/javascripts/general.js"></script>
+</body>
+</html>
