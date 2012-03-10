@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/ChrisCauser/rack-flash.git
+  revision: d8fd1d2c0b176d04bcb904a22cd84debe85f2061
+  specs:
+    rack-flash (0.1.2)
+      rack
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -53,6 +60,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord
   heroku
+  rack-flash!
   rake
   redis
   sinatra

@@ -1,2 +1,24 @@
-lololol
+<% if flash[:notice] %>
+  <h1> <%= flash[:notice] %> </h1>
+<% end %>
+<% if flash[:error] %>
+  <h1> <%= flash[:error] %></h1>
+<% end %>
+<form action='/idea/new' method='post'>
+  <p>
+    <label for='idea-body'>Body:</label>
+    <input id='idea-body' type='text' name='idea[body]'/>
+  </p>
+  <p>
+    <label for='idea-user-name'>User name:</label>
+    <input id='idea-user-name' type='text' name='idea[user_name]'/>
+  </p>
+  <input type='submit'/>
+</form>
+<h1>ideas</h1>
+<ul>
+  <% @ideas.each do |idea| %>
+    <li><%= "#{idea.body} - #{idea.user_name}" %></li>
+  <% end %>
+</ul>
 <%= @cookies.inspect %>
