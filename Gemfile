@@ -1,12 +1,13 @@
 source :rubygems
 
+gem "rack", "<= 1.3.6"
 gem "sinatra"
 gem "heroku"
 gem "redis"
 gem "rake"
 gem "activerecord"
 gem "uuid"
-gem "rack-flash", :git => 'https://github.com/ChrisCauser/rack-flash.git'
+gem "sinatra-flash"
 
 group :development do
   gem "sqlite3"

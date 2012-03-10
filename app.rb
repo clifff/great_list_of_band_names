@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'sinatra'
-require 'rack-flash'
+require 'sinatra/flash'
 require 'active_record'
 require 'uuid'
 
@@ -18,7 +18,6 @@ class Vote < ActiveRecord::Base
 end
 
 enable :sessions
-use Rack::Flash
 
 before do
   unless request.cookies["uuid"]
