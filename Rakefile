@@ -10,8 +10,7 @@ task :bootstrap => :environment do
 end
 
 task :environment, :env do |t, args|
-  args.with_defaults(:env => 'development')
+  require 'bundler'
   require 'active_record'
-  dbconfig = YAML.load(File.read('config/database.yml'))
-  ActiveRecord::Base.establish_connection dbconfig[args[:env]]
+  require 'load_db'
 end
