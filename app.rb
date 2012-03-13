@@ -6,25 +6,39 @@ require 'json'
 require './load_db'
 
 class Idea
-  def self.all
-    ideas = REDIS.lrange(key, 0, -1)
-    ideas = ideas.collect{|i| JSON.parse(i)}
+  def self.all_for_uuid(user_uuid)
+    ideas = all.collect do |i|
+      idea = JSON.parse(i)
+      idea['already_voted'] = Vote.already_voted?( idea['id'], user_uuid )
+      idea
+    end
     ideas
+  end
+
+  def self.all
+    idea_uuids = REDIS.zrange("sorted_votes", 0, -1)
+    idea_uuids.collect{ |id| REDIS.get(id) }
   end
 
   def self.create!(idea = {})
     if valid_params?(idea)
-      REDIS.lpush(key, JSON.dump(idea))
+      idea_uuid = uuid_generator.generate
+
+      idea['votes'] = 0
+      idea['uuid'] = idea_uuid
+      REDIS.set(key(idea_uuid), JSON.dump(idea))
+      REDIS.zadd("sorted_votes", 1, key(idea_uuid) )
+      # TODO automatically vote
     else
       false
     end
   end
 
-  private
-
-  def self.key
-    "globn:ideas"
+  def self.key(uuid)
+    "globn:ideas:#{uuid}"
   end
+
+  private
 
   def self.valid_params?(idea = {})
     if idea['body'] && idea['body'].size > 0 && idea['user_name'] && idea['user_name'].size > 0
@@ -37,7 +51,37 @@ end
 
 class Vote
 
-  def already_voted?
+  def self.create!(user_uuid, params)
+    if valid_params?(params) && !already_voted?(params['idea_uuid'], user_uuid)
+      # TODO: Make this an atomic commit
+      idea_key = Idea.key(params['idea_uuid'])
+      idea = REDIS.get( idea_key )
+      idea = JSON.parse(idea)
+      idea['votes'] += 1
+      REDIS.set( idea_key, JSON.dump(idea) )
+
+      REDIS.sadd( key_for_idea(idea['uuid']), user_uuid )
+    else
+      false
+    end
+  end
+
+  private
+
+  def self.valid_params?(params = {})
+    if params['idea_uuid'] && REDIS.get(Idea.key(params['idea_uuid']))
+      true
+    else
+      false
+    end
+  end
+
+  def self.already_voted?(idea_uuid, user_uuid)
+    REDIS.sismember( key_for_idea(idea_uuid), user_uuid )
+  end
+
+  def self.key_for_idea(uuid)
+    "globn:votes:#{uuid}"
   end
 end
 
@@ -53,7 +97,7 @@ end
 
 get '/' do
   @cookies = request.cookies
-  @ideas = Idea.all
+  @ideas = Idea.all_for_uuid(request.cookies["uuid"])
   erb :index
 end
 
@@ -62,6 +106,15 @@ post '/idea/new' do
     flash[:notice] = "Idea saved!"
   else
     flash[:error] = "Idea invalid. Please supply an idea and username!"
+  end
+  redirect '/'
+end
+
+post '/vote' do
+  if Vote.create!(request.cookies["uuid"], params['vote'])
+    flash[:notice] = "Vote saved!"
+  else
+    flash[:error] = "Vote invalid."
   end
   redirect '/'
 end

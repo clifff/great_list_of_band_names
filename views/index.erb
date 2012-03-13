@@ -61,9 +61,15 @@
 	
 	    <% @ideas.each do |idea| %>
         <article>
-          <h1><em>1.</em> <%= "#{idea['body']}" %></h1>
+        <h1><em>1.</em> <%= "#{idea['body']}" %> (<%= idea['votes'] %>)</h1>
           <footer>
-            by <author><%= "#{idea['user_name']}" %></author> <a href="#">Vote this up</a>
+          by <author><%= "#{idea['user_name']}" %></author>
+          <% unless idea['already_voted'] %>
+            <form action='/vote' method='post'>
+              <input type='hidden' name='vote[idea_uuid]'/ value='<%= idea['uuid'] %>'>
+              <input type='submit'>Vote this up</a>
+            </form>
+          <% end %>
           </footer>
         </article>
       <% end %>
