@@ -40,7 +40,8 @@
         <% if flash[:error] %>
           <div class="flash error"><%= flash[:error] %></div>
         <% end %>
-			  <h1>Suggest a Band Name</h1>
+			  
+			  <h1 class="title">Suggest a Band Name</h1>
 			  
 			  <form action="/idea/new" method="post" class="clearfix">
           <p>
@@ -57,7 +58,7 @@
 			
 			<hr />
 			
-			<h1>Leaderboard</h1>
+			<h1 class="title">Leaderboard</h1>
 	
 	    <% @ideas.each do |idea| %>
         <article>

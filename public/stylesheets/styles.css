@@ -57,8 +57,11 @@ a {
 
 h1 {
   font-size: 1.5em;
-  color: #722C13;
+}
+
+.title { 
   font-family: 'Bree Serif', serif;
+  color: #722C13
 }
 
 #logo {
